@@ -1,5 +1,8 @@
 # blockhaus_led
 
+git@github.com:misko/SP110E.git
+pip install -e . 
+
 apt-get install bluez
 
 
