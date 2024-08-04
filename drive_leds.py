@@ -8,12 +8,12 @@ addresses = [
     "A8:8A:1E:1C:76:1A",
     "23:10:19:00:06:B1",
 ]
-addresses = [
-    "B6590ABB-381A-F367-CF6D-8308C083CD17",
-    "8BC7564F-B8DB-E533-2401-481547665B23",
-    "61EF3343-6CEC-C59C-D2CD-6861746676BD",
-    "C836586A-EFA8-468F-E3CF-6840F1D5A7C0",
-]
+# addresses = [
+#     "B6590ABB-381A-F367-CF6D-8308C083CD17",
+#     "8BC7564F-B8DB-E533-2401-481547665B23",
+#     "61EF3343-6CEC-C59C-D2CD-6861746676BD",
+#     "C836586A-EFA8-468F-E3CF-6840F1D5A7C0",
+# ]
 
 
 async def pulse_color(device):
@@ -23,6 +23,9 @@ async def pulse_color(device):
     await device.write_parameter("color", [0, 0, 255])
     await device.write_parameter("state", False)
 
+
+async def set_mode(device,mode):
+    await device.write_parameter("state", True)
 
 async def led_on(device):
     await device.write_parameter("state", True)
@@ -58,6 +61,7 @@ async def main():
             {"ic_model": "WS2811", "sequence": "BGR", "pixels": 60}
         )
 
+    await asyncio.gather(*[led_on(_device) for _device in devices])
     for i in range(10):
         await asyncio.gather(*[led_on(_device) for _device in devices])
         await asyncio.gather(*[led_blue(_device) for _device in devices])
